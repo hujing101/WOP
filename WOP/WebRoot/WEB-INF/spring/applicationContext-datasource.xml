@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- <bean id="propertyConfigurer" class="com.huawei.ispace.kernel.mgmt.spring.DecryptPropertyPlaceholderConfigurer"> 
+		<property name="locations"> <value>/WEB-INF/en_db.properties</value> </property> 
+		<property name="keyLocation"> <value>/WEB-INF/key.dat</value> </property> 
+		<property name="fileEncoding" value="utf-8" /> </bean> -->
+
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler">
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/db.properties</value>
+		</property>
+	</bean>
+
+
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias">
+			<value>oseDataSource</value>
+		</property>
+		<property name="driver">
+			<value>${driver.class}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${connection.url}</value>
+		</property>
+		<property name="user">
+			<value>${username}</value>
+		</property>
+		<property name="password">
+			<value>${password}</value>
+		</property>
+		<property name="prototypeCount">
+			<value>10</value>
+		</property>
+		<property name="maximumConnectionCount">
+			<value>200</value>
+		</property>
+		<property name="simultaneousBuildThrottle">
+			<value>300</value>
+		</property>
+		<property name="minimumConnectionCount">
+			<value>15</value>
+		</property>
+		<property name="trace">
+			<value>true</value>
+		</property>
+		<property name="verbose">
+			<value>false</value>
+		</property>
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>/WEB-INF/classes/sql-map-config.xml</value>
+		</property>
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="lobHandler" ref="lobHandler">
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+	</bean>
+
+
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="add*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<prop key="del*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<prop key="edit*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<prop key="update*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<prop key="save*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<prop key="mod*">PROPAGATION_REQUIRED,-AabarException</prop>
+				<!-- <prop key="*">PROPAGATION_REQUIRED,readOnly</prop> -->
+			</props>
+		</property>
+	</bean>
+
+
+	<!--add by l54363 for sql record of ibatis -->
+	<bean id="baseDao" abstract="true" class="com.wanzheng.wop.app.dao.BaseDao"
+		init-method="initialize">
+		<property name="sqlMapClient">
+			<ref local="sqlMapClient" />
+		</property>
+
+		<property name="sqlExecutor">
+			<ref local="sqlExecutor" />
+		</property>
+	</bean>
+
+	<bean id="sqlExecutor" class="com.wanzheng.wop.app.dao.LimitSqlExecutor">
+		<property name="proxoolDataSource">
+			<ref local="dataSource" />
+		</property>
+	</bean>
+	<!-- add for sql record of ibatis -->
+</beans>

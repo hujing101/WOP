@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="systemChain" class="com.dragon.kernel.chain.Chain">
+		<property name="before">
+			<list>
+			</list>
+		</property>
+		<property name="after">
+			<list>
+				<!-- ref local="statRequestFilter" / -->
+			</list>
+		</property>
+	</bean>
+</beans>

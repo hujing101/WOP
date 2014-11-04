@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="userService" parent="baseTransactionProxy" lazy-init="default"
+		autowire="default" dependency-check="default">
+		<property name="target">
+			<ref local="userServiceTarget" />
+		</property>
+	</bean>
+
+	<bean id="userServiceTarget" class="com.wanzheng.wop.app.service.UserService"
+		autowire="byName">
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+	</bean>
+
+	<bean id="configService" parent="baseTransactionProxy" lazy-init="default"
+		autowire="default" dependency-check="default">
+		<property name="target">
+			<ref local="configServiceTarget" />
+		</property>
+	</bean>
+
+	<bean id="configServiceTarget" class="com.wanzheng.wop.app.service.ConfigService"
+		autowire="byName">
+		<property name="configDao">
+			<ref bean="configDao" />
+		</property>
+	</bean>
+</beans>

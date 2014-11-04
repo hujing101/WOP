@@ -1,0 +1,37 @@
+修改表结构：
+#新增一个字段，默认值为0，非空，自动增长，主键   
+  
+   alter table tabelname add new_field_name field_type default 0 not null auto_increment ,add primary key (new_field_name);   
+  
+#增加一个新字段   
+  
+   alter table tableName add new_field_name field_type;   
+   alter table tableName add new_field_name field_type not null default '0';   
+  
+#删除字段   
+  
+   alter table tableName drop column field_name;   
+  
+#重命名字段   
+  
+   alter table tableName change old_field_name new_field_name new_field_type;   
+  
+#改变字段的类型   
+  
+   alter table tableName change field_name field_name field_type;   
+#重命名表   
+  
+   alter table table_old_name rename table_new_name;   
+  
+#加索引   
+  alter table tablename add index 索引名 (字段名1[，字段名2 …]);   
+  alter table tablename add index index_name(name);   
+  
+#设置主键   
+  alter table tablename add primary key(field_name);   
+  
+#添加唯一索引   
+  alter table tablename add unique index_name(field_name);   
+  
+#删除索引   
+  alter table tablename drop index index_name; 

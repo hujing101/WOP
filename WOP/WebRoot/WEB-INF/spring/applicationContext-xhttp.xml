@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="xhttp" class="com.dragon.kernel.endpoint.http.XHttp"
+		singleton="true" autowire="byName">
+		<constructor-arg index="0">
+			<ref bean="xhttp.serviceRegistry" />
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="xhttp.serviceFactory" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="xhttp.serviceFactory" class="com.dragon.kernel.endpoint.http.service.ServiceFactory"
+		singleton="true">
+	</bean>
+
+
+	<bean id="xhttp.serviceRegistry" class="com.dragon.kernel.endpoint.http.service.ServiceRegistry"
+		singleton="true">
+	</bean>
+
+
+	<bean id="userXH" class="com.wanzheng.wop.app.xhttp.User">
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+	</bean>
+
+	<bean id="iuserXH" class="com.dragon.kernel.endpoint.http.service.ServiceExporter"
+		init-method="init">
+		<property name="xhttp" ref="xhttp" />
+		<property name="serviceBean">
+			<ref local="userXH" />
+		</property>
+		<property name="serviceClass" value="com.wanzheng.wop.intf.xhttp.IUser" />
+	</bean>
+</beans>

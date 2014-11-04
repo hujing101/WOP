@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="wop" default="build" basedir=".">
+	<!-- 源码目录 -->
+	<property name="src.main" value="${basedir}/src" />
+	<property name="dist" value="${basedir}/dist" />
+	<property name="sourcejar" value="${ant.project.name}.war" />
+	<!-- 应用目录 -->
+	<property name="jarfile" value="${ant.project.name}.war" />
+	<property name="classes.main" value="${basedir}/WebRoot" />
+	<property name="lib.home" value="WebRoot/WEB-INF/lib" />
+	<pathconvert property="libs.project" pathsep=" ">
+		<mapper>
+			<chainedmapper>
+				<flattenmapper />
+				<!-- add lib/ prefix -->
+				<globmapper from="*" to="lib/*" />
+			</chainedmapper>
+		</mapper>
+		<path>
+			<!-- lib.home contains all jar files, in several subdirectories -->
+			<fileset dir="${lib.home}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</pathconvert>
+
+	<!-- ================================= target: autorelease 自动发布产品 ================================= -->
+	<target name="build" depends="Pack" description="--> 自动发布产品" />
+	<!--D:\ispace\StubTest\dist -->
+	<!-- - - - - - - - - - - - - - - - - - target: pack 4)打包 - - - - - - - - 
+		- - - - - - - - - -->
+	<target name="Pack">
+		<delete dir="${dist}" failonerror="false" />
+		<mkdir dir="${dist}" />
+		<jar destfile="${dist}/${sourcejar}">
+			<fileset dir="${classes.main}" excludes="**/*.scc">
+			</fileset>
+			<manifest>
+				<attribute name="Class-Path" value="${libs.project}" />
+			</manifest>
+		</jar>
+
+		<copy todir="${dist}">
+			<fileset dir="${basedir}" includes="**/start.sh" />
+		</copy>
+		<copy todir="D:\WTP\apache-tomcat-6.0.26\webapps">
+			<fileset file="${dist}/${sourcejar}" excludes="**/*.scc" />
+		</copy>
+	</target>
+</project>

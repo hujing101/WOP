@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>wop</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring/applicationContext-*.xml
+		</param-value>
+	</context-param>
+	<!-- <filter> <filter-name>viewedFilter</filter-name> <filter-class>com.moneybar.aabar.pub.filter.ViewedFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>viewedFilter</filter-name> <url-pattern>*.jsp</url-pattern> 
+		</filter-mapping> <filter-mapping> <filter-name>viewedFilter</filter-name> 
+		<url-pattern>*.jpg</url-pattern> </filter-mapping> <filter-mapping> <filter-name>viewedFilter</filter-name> 
+		<url-pattern>*.jpeg</url-pattern> </filter-mapping> <filter-mapping> <filter-name>viewedFilter</filter-name> 
+		<url-pattern>*.gif</url-pattern> </filter-mapping> -->
+
+	<servlet>
+		<description></description>
+		<display-name>StartupServlet</display-name>
+		<servlet-name>StartupServlet</servlet-name>
+		<servlet-class>com.wanzheng.wop.kernel.boot.StartupServlet</servlet-class>
+		<init-param>
+			<param-name>log4jconfig</param-name>
+			<param-value>
+				WEB-INF/log4j.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>XHttpServlet</display-name>
+		<servlet-name>XHttpServlet</servlet-name>
+		<servlet-class>com.wanzheng.wop.kernel.boot.XHttpServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>XHttpServlet</servlet-name>
+		<url-pattern>/devapp/*</url-pattern>
+	</servlet-mapping>
+
+</web-app>

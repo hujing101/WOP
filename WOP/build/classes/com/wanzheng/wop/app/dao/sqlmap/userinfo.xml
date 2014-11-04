@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userinfo">
+	<typeAlias alias="UserInfoVO" type="com.wanzheng.wop.app.vo.UserInfoVO" />
+	<resultMap class="UserInfoVO" id="UserInfo-result">
+		<result property="userId" column="userId" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="userName" column="USERNAME" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="passWord" column="PASSWORD" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="nickName" column="NICKNAME" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="role" column="ROLE" jdbcType="NUMBER"
+			nullValue="" />
+		<result property="imei" column="IMEI" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="wwId" column="WWID" jdbcType="NUMBER"
+			nullValue="" />
+		<result property="register_time" column="REGISTER_TIME"
+			jdbcType="NUMBER" nullValue="" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="address" column="ADDRESS" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="sex" column="SEX" jdbcType="NUMBER"
+			nullValue="" />
+		<result property="tel" column="TEL" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="mail" column="MAIL" jdbcType="VARCHAR"
+			nullValue="" />
+		<result property="qq" column="QQ" jdbcType="VARCHAR" nullValue="" />
+		<result property="state" column="STATE" jdbcType="NUMBER"
+			nullValue="" />
+	</resultMap>
+
+	<select id="getUserInfoByName" resultClass="UserInfoVO"
+		parameterClass="java.lang.String">
+		<![CDATA[ select * from wop_user_info where userName=#userName#]]>
+	</select>
+
+	<insert id="regUser" parameterClass="UserInfoVO">
+			<![CDATA[ 
+		 insert into wop_user_info(userId,userName,passWord,nickName,role,
+		 imei,wwId,register_time,mobile,address,sex,tel,mail,qq,state)
+		 values(#userId:VARCHAR#,#userName:VARCHAR#,#passWord:VARCHAR#,#nickName:VARCHAR#,#role:NUMBER#,
+		 #imei:VARCHAR#,#wwId:VARCHAR#,#register_time:NUMBER#,#mobile:VARCHAR#,#address:VARCHAR#,#sex:NUMBER#,#tel:VARCHAR#,
+		 #mail:VARCHAR#,#qq:VARCHAR#,#state:NUMBER#)
+		]]>
+	</insert>
+</sqlMap>

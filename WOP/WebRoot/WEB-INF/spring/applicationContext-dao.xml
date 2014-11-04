@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="userDao" class="com.wanzheng.wop.app.dao.UserDao"
+		autowire="byName" parent="baseDao">
+	</bean>
+
+	<bean id="configDao" class="com.wanzheng.wop.app.dao.ConfigDao"
+		autowire="byName" parent="baseDao">
+	</bean>
+</beans>
